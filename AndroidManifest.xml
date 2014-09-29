@@ -7,6 +7,9 @@
     <uses-sdk
         android:minSdkVersion="18"
         android:targetSdkVersion="20" />
+    
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    
 
     <application
         android:allowBackup="true"
@@ -26,7 +29,7 @@
             
         </activity>
         <activity android:name="MainActivity"></activity>
-        <activity android:name="SaveLinkActivity" android:theme="@android:style/Theme.NoDisplay">
+        <activity android:name="SaveLinkActivity" android:label="Save to Go" android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
  				<action android:name="android.intent.action.SEND" />
  				<category android:name="android.intent.category.DEFAULT" />

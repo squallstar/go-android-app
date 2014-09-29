@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class SaveLinkActivity extends Activity {
 
@@ -31,18 +32,13 @@ public class SaveLinkActivity extends Activity {
         		//get the received text
         		String receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT);
         		
-        		API.getApiClient().saveLink(receivedAction,	new Callback<GoResponseSaveLink>() {
+        		API.getApiClient().saveLink(receivedText, new Callback<GoResponseSaveLink>() {
 					
 					@Override
 					public void success(GoResponseSaveLink response, Response arg1) {
 						if (response.code == 200)
 						{
-							new AlertDialog.Builder(SaveLinkActivity.this)
-		 	    		    .setTitle(response.link.title)
-		 	    		    .setMessage("The link has been saved to Go.\r\n\r\n" + response.link.url)
-		 	    		    .setPositiveButton(android.R.string.ok, null)
-		 	    		    .setIcon(android.R.drawable.ic_dialog_info)    		    
-		 	    		    .show();
+							Toast.makeText(getApplicationContext(), "Link saved", Toast.LENGTH_LONG).show();
 							
 							finish();
 						}
