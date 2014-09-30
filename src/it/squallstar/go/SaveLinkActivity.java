@@ -39,7 +39,6 @@ public class SaveLinkActivity extends Activity {
 						if (response.code == 200)
 						{
 							Toast.makeText(getApplicationContext(), "Link saved", Toast.LENGTH_LONG).show();
-							
 							finish();
 						}
 					}
