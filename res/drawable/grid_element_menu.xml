@@ -3,4 +3,7 @@
     <item 
          android:id="@+id/showInBrowser"
          android:title="View in browser"/>
+    <item 
+         android:id="@+id/shareLink"
+         android:title="Share"/>
 </menu>

@@ -12,9 +12,11 @@
 	    android:orientation="vertical"
 	    android:id="@+id/itemsview"
 	    android:numColumns="1"
-	    android:background="#E9E9E9"
+	    android:background="#FFFFFF"
 	    android:verticalSpacing="15dp"
-	    android:padding="15dp"
+	    android:paddingLeft="15dp"
+	    android:paddingTop="15dp"
+	    android:paddingBottom="15dp"
 	    android:clipToPadding="false"
 	/>
 

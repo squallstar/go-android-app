@@ -18,7 +18,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
@@ -50,19 +52,19 @@ public class MainActivity extends Activity implements OnRefreshListener {
 	    
 	    registerForContextMenu(itemsview);
 	    
-//	    itemsview.setOnItemClickListener(new OnItemClickListener()
-//	    {
-//	        @Override
-//	        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-//	        {
-//	        	GoLink link = adapter.getItem(position);
-//	        	
-//	        	// Native intent
-//	        	Intent i = new Intent(Intent.ACTION_VIEW);
-//	        	i.setData(Uri.parse(link.url));
-//	        	startActivity(i);
-//	        }
-//	    });
+	    itemsview.setOnItemClickListener(new OnItemClickListener()
+	    {
+	        @Override
+	        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+	        {
+	        	GoLink link = adapter.getItem(position);
+	        	
+	        	// Native intent
+	        	Intent i = new Intent(Intent.ACTION_VIEW);
+	        	i.setData(Uri.parse(link.url));
+	        	startActivity(i);
+	        }
+	    });
 	}
 	
 	@Override
@@ -84,6 +86,16 @@ public class MainActivity extends Activity implements OnRefreshListener {
 	      i.setData(Uri.parse(link.url));
 	      startActivity(i);
 	      return true;
+	    case R.id.shareLink:
+	    	Intent share = new Intent(android.content.Intent.ACTION_SEND);
+            share.setType("text/plain");
+            share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+         
+            share.putExtra(Intent.EXTRA_SUBJECT, link.title);
+            share.putExtra(Intent.EXTRA_TEXT, link.bookmark);
+         
+            startActivity(Intent.createChooser(share, "Share link"));
+	    	return true;
 	    default:
 	      return super.onContextItemSelected(item);
 	  }

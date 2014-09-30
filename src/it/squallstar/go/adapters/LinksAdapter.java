@@ -2,17 +2,9 @@ package it.squallstar.go.adapters;
 
 import it.squallstar.go.R;
 import it.squallstar.go.api.API;
+import it.squallstar.go.api.API.OnFetchListener;
 import it.squallstar.go.api.GoLink;
 import it.squallstar.go.api.GoLinks;
-import it.squallstar.go.api.GoResponseLinks;
-import it.squallstar.go.api.API.OnFetchListener;
-
-import java.util.List;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -22,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class LinksAdapter extends BaseAdapter {
 	
