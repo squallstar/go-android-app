@@ -30,35 +30,35 @@ public class MainActivity extends Activity implements OnRefreshListener {
 
 	SwipeRefreshLayout swipeLayout;
 	LinksAdapter adapter;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	
+
 	    setContentView(R.layout.activity_links);
-	    
+
 	    this.setTitle(" Links");
-		
+
 	    adapter = new LinksAdapter(getApplicationContext(), new GoLinks());
-	    
+
 	    GridView itemsview = (GridView) findViewById(R.id.itemsview);
 	    itemsview.setAdapter(adapter);
-	    
+
 	    swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
 	    swipeLayout.setOnRefreshListener(this);
 	    swipeLayout.setColorSchemeColors(Color.parseColor("#EEBB09"), Color.parseColor("#F08B08"), Color.parseColor("#4BBFFF"), Color.parseColor("#FFFFFF"));
-	    
+
 	    onRefresh();
-	    
+
 	    registerForContextMenu(itemsview);
-	    
+
 	    itemsview.setOnItemClickListener(new OnItemClickListener()
 	    {
 	        @Override
 	        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	        {
 	        	GoLink link = adapter.getItem(position);
-	        	
+
 	        	// Native intent
 	        	Intent i = new Intent(Intent.ACTION_VIEW);
 	        	i.setData(Uri.parse(link.url));
@@ -66,20 +66,13 @@ public class MainActivity extends Activity implements OnRefreshListener {
 	        }
 	    });
 	}
-	
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.drawable.grid_element_menu, menu);
-	}
-		
+
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 	  AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-	  
+
 	  GoLink link = adapter.getItem(info.position);
-	  
+
 	  switch (item.getItemId()) {
 	    case R.id.showInBrowser:
 	      Intent i = new Intent(Intent.ACTION_VIEW);
@@ -90,21 +83,21 @@ public class MainActivity extends Activity implements OnRefreshListener {
 	    	Intent share = new Intent(android.content.Intent.ACTION_SEND);
             share.setType("text/plain");
             share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-         
+
             share.putExtra(Intent.EXTRA_SUBJECT, link.title);
             share.putExtra(Intent.EXTRA_TEXT, link.bookmark);
-         
+
             startActivity(Intent.createChooser(share, "Share link"));
 	    	return true;
 	    default:
 	      return super.onContextItemSelected(item);
 	  }
 	}
-	
+
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.drawable.main_menu, menu);
-        
+
         final MenuItem search = menu.findItem(R.id.search_action);
         final SearchView searchView = (SearchView) search.getActionView();
 
@@ -114,15 +107,15 @@ public class MainActivity extends Activity implements OnRefreshListener {
             public boolean onQueryTextSubmit(String query) {
             	adapter.getLinks().setSearchQuery(query);
             	searchView.clearFocus();
-            	
+
             	if (query.length() > 0) setTitle(" Search: " + query);
             	else setTitle(" Links");
-            	
+
             	swipeLayout.setRefreshing(true);
-            	
+
             	adapter.getLinks().clear();
             	onRefresh();
-                
+
                 return true;
             }
 
@@ -131,7 +124,7 @@ public class MainActivity extends Activity implements OnRefreshListener {
                 return true;
             }
         });
-        
+
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean queryTextFocused) {
@@ -141,21 +134,21 @@ public class MainActivity extends Activity implements OnRefreshListener {
                 }
             }
         });
-        
+
         return true;
     }
-	
+
 	@Override
 	public void onRefresh() {
 		API.Current().fetchLinks(adapter.getLinks(), new OnFetchListener() {
-			
+
 			@Override
 			public void onComplete(boolean success, int newLinksCount) {
 				swipeLayout.setRefreshing(false);
-				
+
 				if (success) {
 					adapter.notifyDataSetChanged();
-					
+
 					if (adapter.getLinks().size() == 0 && adapter.getLinks().hasSearchQuery()) {
 						Toast.makeText(getApplicationContext(), "No results", Toast.LENGTH_SHORT).show();
 					}

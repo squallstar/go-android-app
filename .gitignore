@@ -28,3 +28,10 @@ proguard/
 assets/crashlytics-build.properties
 
 res/values/com_crashlytics_export_strings.xml
+
+# IDE
+local.properties
+.idea/
+
+# OSX
+.DS_Store

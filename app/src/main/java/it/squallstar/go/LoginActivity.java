@@ -20,16 +20,16 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
+
         setContentView(R.layout.activity_links);
     }
-    
+
     @Override
     protected void onResume() {
     	super.onResume();
-    	
+
     	if (GoUser.CurrentUser(getApplicationContext()) != null) {
     		loadMainActivity();
     	} else {
@@ -41,7 +41,7 @@ public class LoginActivity extends Activity {
  	    		    .setTitle("Oops...")
  	    		    .setMessage("The provided uid or password didn't match. Please check your login details again.")
  	    		    .setPositiveButton(android.R.string.ok, null)
- 	    		    .setIcon(android.R.drawable.ic_dialog_alert)    		    
+ 	    		    .setIcon(android.R.drawable.ic_dialog_alert)
  	    		    .show();
 				}
 
@@ -50,15 +50,15 @@ public class LoginActivity extends Activity {
 					GoUser.SetCurrentUser(response, getApplicationContext());
 					loadMainActivity();
 				}
-    			
+
     		});
     	}
     }
-    
+
     private void loadMainActivity()
     {
     	Intent mainActivity = new Intent(this, MainActivity.class);
-		mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); 
+		mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(mainActivity);
     }
 
@@ -66,7 +66,6 @@ public class LoginActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.links, menu);
         return true;
     }
 
